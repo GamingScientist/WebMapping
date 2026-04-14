@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <title>Fixed Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!--    1.1.  Include the reference to the Mapbox JavaScript here in the <head> of the page  -->
+           <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+    <!--    1.2 Include the reference to the Mapbox CSS here in the <head> of the page  -->
+          <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        /* 1.4 Insert the CSS code here between the <style> tags */
+        body { margin:50px; padding:0; }
+           #map1 { position:relative; height:300px; width:100%;}
+           #map2 { position:relative; height:300px; width:100%;}
+           #map3 { position:relative; height:300px; width:100%;}
+        /* 2.5.2 Insert additional CSS code here between the <style> tags */
+
+    </style>
+  </head>
+
+  <body>
+        <!-- 1.3 Insert the div for the structure of the page here in the <body> of the page -->
+          <div id='map'>
+    </div>
+        <p> This is Thurston High School. I got my diploma on my fourth year of attendance, in 2021. During my time here I was in a robotics club, 
+            participated in Oregon Battle of the Books, and endured the COVID-19 pandemic.</p>
+        <hr>
+        <h1> Map 1: </h1>
+            <div id='map1'></div>
+        <hr>
+        <p> This is Lane Community College. It is here where I got my two year Associate's degree. When I was here I took up a hobby of
+            game development in C#, which has been helping me with learning JavaScript.
+        </p>
+        <hr>
+        <h1> Map 2: </h1>
+            <div id='map2'></div>
+        <hr>
+        <p> This is the University of Oregon. I am almost done with my Bachelor's degree after 3 years of attendance, and 5 total years of higher
+            education since I graduated high school. My degree will be in environmental science.
+        </p>
+        <hr>
+        <h1> Map 3:</h1>
+            <div id='map3'></div>
+
+        
+        <script>
+            /* Insert the JavaScript within the <script> tags, within the body */
+            // 2.1 Start with the Mapbox access token
+            mapboxgl.accessToken='pk.eyJ1IjoidGluc2VsLXNob3J0Y2FrZSIsImEiOiJjbW53YzhkMGsxanB6Mm9vbTludGY3dWJiIn0.1NA--CJViDPvJVvXXf3VAQ';
+
+            // 2.2 Then initialize the first map
+            var map = new mapboxgl.Map({
+                container: 'map1', // id of a div on your page, where the map will be inserted
+                style: 'mapbox://styles/mapbox/streets-v11', // the style URL 'mapbox://styles/mapbox/streets-v11' 
+                center: [-122.92506, 44.0491], // starting position [lng, lat] eg. [-122.6788, 45.5212]
+                zoom: 13 // starting zoom 
+            });
+
+            // 2.3 Add any other variables (such as popups and markers) to the first map
+            var popup = new mapboxgl.Popup()
+            .setText('This is Thurston High School, my high school.');
+
+            var marker = new mapboxgl.Marker({color: 'red'})
+            .setLngLat([-122.92506, 44.0491])
+            .setPopup(popup)
+            .addTo(map);
+
+            // 2.4 Add arguments to disable the map interactivity here
+            // Disable drag and zoom handlers.
+            map.dragPan.disable();
+            map.scrollZoom.disable();
+            map.boxZoom.disable();
+            map.dragRotate.disable();
+            map.doubleClickZoom.disable();
+            map.keyboard.disable();
+            map.touchZoomRotate.disable();
+            map.touchZoomRotate.disableRotation();
+
+
+            // 2.5.3 Then initialize the 2nd map
+            var map2 = new mapboxgl.Map({
+                container: 'map2', // id of a div on your page, where the map will be inserted
+                style: 'mapbox://styles/mapbox/streets-v11', // the style URL 'mapbox://styles/mapbox/streets-v11' 
+                center: [-123.0347, 44.0091], // starting position [lng, lat] eg. [-122.6788, 45.5212]
+                zoom: 13 // starting zoom 
+            });
+
+            var popup2 = new mapboxgl.Popup()
+            .setText('This is Lane Community College, where I got my Associates degree.');
+
+            var marker2 = new mapboxgl.Marker({color: 'blue'})
+            .setLngLat([-123.0347, 44.0091])
+            .setPopup(popup2)
+            .addTo(map2);
+
+            map2.dragPan.disable();
+            map2.scrollZoom.disable();
+            map2.boxZoom.disable();
+            map2.dragRotate.disable();
+            map2.doubleClickZoom.disable();
+            map2.keyboard.disable();
+            map2.touchZoomRotate.disable();
+            map2.touchZoomRotate.disableRotation();
+
+            //Map 3 code here
+            var map3 = new mapboxgl.Map({
+                container: 'map3', // id of a div on your page, where the map will be inserted
+                style: 'mapbox://styles/mapbox/streets-v11', // the style URL 'mapbox://styles/mapbox/streets-v11' 
+                center: [-123.0725, 44.0451], // starting position [lng, lat] eg. [-122.6788, 45.5212]
+                zoom: 13 // starting zoom 
+            });
+
+            var popup3 = new mapboxgl.Popup()
+            .setText('This is University of Oregon, where I am earning my Bachelors degree.');
+
+            var marker3 = new mapboxgl.Marker({color: '#BF87C0FF'})
+            .setLngLat([-123.0725, 44.0451])
+            .setPopup(popup3)
+            .addTo(map3);
+
+            map3.dragPan.disable();
+            map3.scrollZoom.disable();
+            map3.boxZoom.disable();
+            map3.dragRotate.disable();
+            map3.doubleClickZoom.disable();
+            map3.keyboard.disable();
+            map3.touchZoomRotate.disable();
+            map3.touchZoomRotate.disableRotation();
+
+
+            // 2.5.4 Add any other variables (such as markers) to the second map
+
+
+            // 2.5.5 Add arguments to disable the second map's interactivity here
+            
+            // 2.6 Change the map pointers
+            map.getCanvas().style.cursor = 'auto';
+            map2.getCanvas().style.cursor = 'auto';
+            map3.getCanvas().style.cursor = 'auto';
+        </script>
+  </body>
+</html>
