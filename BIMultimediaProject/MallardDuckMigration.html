@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset='utf-8' /> <!--Unicode character set-->
+        <title> Mallard Duck Migration</title>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' /> <!--Metadata-->
+        <script src='https://api.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.js'></script> <!--Mapbox JS-->
+
+        <!--Mapbox CSS-->
+        <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.css" rel="stylesheet">
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.js'></script>
+
+        <!--Map div-->
+        <div id='map'> 
+        </div>
+
+        <!--Button divs-->
+        
+        <button class='fly' id='MoltButton'> Video of mallards' molting</button>
+        <button class='fly' id='MatingButton'> Range of mallards' mating in North America</button>
+        <button class='fly' id='EssayButton'> Essay on mallard migration</button>
+        <button class='fly' id='HistoricalRangeButton'> Historical ranges of mallard migration</button>
+        <button class='fly' id='EuropeButton'> Range of mallards' migration in Europe</button>
+
+        <style>
+            /*Body and map CSS*/
+            body { margin:0; padding:0; }
+            #map { position:absolute; top:0; bottom:0; width:100%; }
+            
+            /* Adjusts popup box's width*/
+            .mapboxgl-popup {
+            min-width: 400px;
+            /*add the css for the popup font here */
+            }
+
+            /* The CSS for the "Fly" buttons.   */
+            .fly {
+                display: inline-block; /* displays over the map */
+                position: relative; /* displays over the map */
+                left: 150px; /*Moves all buttons further to center*/
+                margin: 10px auto; 
+                width: 20%;  /* width of parent div, aka width of buttons */
+                padding: 10px;
+                border-style: solid;
+                border-color: oldlace;
+                border-radius: 3px; /* rounded corners */
+                font-size: 1em;
+                font-family: "Henny Penny", system-ui;
+                text-align: center;
+                font-weight: 400;
+                color: yellow;
+                background: green;
+                cursor:pointer;
+            }
+            .fly:hover {
+                background-color: yellow;
+                color: green;
+            }
+
+        </style>
+    </head>
+    <body>
+        <script>
+            mapboxgl.accessToken = "pk.eyJ1IjoidGluc2VsLXNob3J0Y2FrZSIsImEiOiJjbW5qcHNkdzkwcWh1Mm9vZDBrYTRxeDlpIn0.ihhQGwQSR32s5TnmMQgHMA"; //Access token
+
+            //Initialize map
+            var map = new mapboxgl.Map({ 
+                container: 'map',
+                style: 'mapbox://styles/tinsel-shortcake/cmp8zmfgp008001shh8eu4lnc',
+                center: [-97, 37],
+                zoom: 4
+            })
+
+            //Marker 1 and its popup
+            var popup1Text = '<p> In the fall, in preparation for the mating season male mallards molt. The result of this is influenced by the quantity of food available because of how taxing it is. This is an example of ornaments at play as only the healthiest of mallards will have their signature green plumage. </p>';
+            popup1Text += '<iframe width="100%" height="315" src="https://www.youtube.com/embed/WYe_HpjDAUE?si=onf3eyzFwMK_zsYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+            popup1Text += 'Source: Walter Jahn, <a href="https://www.youtube.com/embed/WYe_HpjDAUE?si=onf3eyzFwMK_zsYo" target="_blank">YouTube</a>';
+            
+            var popup1 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup1Text);
+
+            var marker1 = new mapboxgl.Marker({color: "DarkRed"})
+                .setLngLat ([-130.7736, 59.2837]) //Test location somewhere in Canada
+                .setPopup(popup1)
+                .addTo(map)
+
+            //Marker 2 and its popup
+            var popup2Text = '<a href="https://docs.google.com/document/d/1uguE8C9i2H4LGS3xmdefmyt1i6YB4BUziux_aCIqgss/edit?tab=t.0#heading=h.gxzd92fkn08p" target="_blank"> Click here to read about the sign stimulus for mallard migration.</a>';
+            popup2Text += '<a </a>';
+            
+            var popup2 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup2Text);
+
+            var marker2 = new mapboxgl.Marker({color: "DarkRed"})
+                .setLngLat ([-103.5385, 44.375])
+                .setPopup(popup2)
+                .addTo(map)
+
+            //Marker 3 and its group
+            var popup3Text = '<p> The majority of the mating range of mallard ducks occurs in the Prairie Pothole Region of Canada and the United States.</p>';
+            popup3Text += '<a>Source 1: U.S. Fish & Wildlife Service, <a href="https://www.fws.gov/species/mallard-anas-platyrhynchos">FWS</a>';
+            popup3Text += '<p>Source 2: <a href="https://wildlife-species.canada.ca/bird-status/oiseau-bird-eng.aspx?sY=2019&sL=e&sB=MALL&sM=a">Government of Canada</p>';
+
+            
+            var popup3 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup3Text);
+
+            var marker3 = new mapboxgl.Marker({color: "DarkRed"})
+                .setLngLat ([-111.9465, 52.2972])
+                .setPopup(popup3)
+                .addTo(map)
+
+            //Marker 4 and its group
+            var popup4Text = '<p> Change in mallard ranges from 1960-1979, 1980-1999, and 2000-2019.</p>';
+            popup4Text += '<iframe width="375" height="200" <img src="Anims/duad041_suppl_Supplementary_Figure_S6.gif">';
+
+            
+            var popup4 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup4Text);
+
+            var marker4 = new mapboxgl.Marker({color: "DarkRed"})
+                .setLngLat ([-96.5602, 36.6065]) //Further South
+                .setPopup(popup4)
+                .addTo(map)
+
+            //Marker 5 and its group
+            var popup5Text = '<p> This was the range of mallard migrations in the UK back in 2012. They may have had a similar migration pattern as mallards in North America.</p>';
+            popup5Text += 'Source: British Trust for Ornithology, <a href="https://www.bto.org/our-work/science/research-areas/wetland-and-marine/soss/migration-zone-shapefiles" target="_blank">BTO</a>';
+
+            
+            var popup5 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup5Text);
+
+            var marker5 = new mapboxgl.Marker({color: "DarkRed"})
+                .setLngLat ([-2.6337, 52.3584]) //UK
+                .setPopup(popup5)
+                .addTo(map)
+
+            //Adds listener to every button
+            
+            document.getElementById('MoltButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-130.7736, 59.2837],
+                    zoom: 4,
+                    zoomNum: map.zoom        
+                    })
+                
+            })
+
+            document.getElementById('EssayButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-103.5385, 44.375],
+                    zoom: 4,
+                    zoomNum: map.zoom        
+                    })
+                
+            })
+
+            document.getElementById('MatingButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-111.9465, 52.2972],
+                    zoom: 4,
+                    zoomNum: map.zoom        
+                    })
+                
+            })
+
+            document.getElementById('HistoricalRangeButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-96.5602, 36.6065],
+                    zoom: 4,
+                    zoomNum: map.zoom        
+                    })
+                
+            })
+
+            document.getElementById('EuropeButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-2.6337, 52.3584],
+                    zoom: 4,
+                    zoomNum: map.zoom        
+                    })
+            })
+            
+        </script>
+    </body>
+</html>
