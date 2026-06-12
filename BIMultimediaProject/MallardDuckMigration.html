@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset='utf-8' /> <!--Unicode character set-->
+        <title> Mallard Ducks' Winter Migration in North America | Isaac Thurber</title>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' /> <!--Metadata-->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src='https://api.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.js'></script> <!--Mapbox JS-->
+
+        <!--Mapbox CSS-->
+        <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.css" rel="stylesheet">
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.js'></script>
+
+        <!--   Insert Link to Google font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+        <!--Map div-->
+        <div id='map'> 
+        </div>
+
+        <!--Banner div-->
+        <div id='banner'>
+     		<h1>Mallard Ducks' Winter Migration | Isaac Thurber</h1>;
+ 	    </div>
+
+        <style>
+            /*Body and map CSS*/
+            body { margin:0; padding:0; }
+            #map { position:absolute; top:0; bottom:0; width:100%; }
+
+            #banner {  
+            background-color:white; 
+            opacity: 80%; 
+            text-align: center;
+            color: black;
+            position: absolute; /*Required to change banner's position*/
+            left: 0px;
+            bottom: 100px; /*Distance from bottom of screen*/
+            width: 100%;
+            height: 75px; /*Height of banner*/
+            font-family: "Caudex", serif; /*Font used*/
+            font-size: 1em;
+            font-weight: 400;
+            }
+            
+            /* Adjusts popup box's width*/
+            .mapboxgl-popup {
+            min-width: 400px;
+            padding: 8px;
+            font-family: "Caudex", serif; /*Font used*/
+            font-size: 1em;
+            font-weight: 400;
+            }
+
+            /*Wraps link text w/o needing to wait for end of word*/
+            a {
+                word-break: break-all;
+            }
+
+            /* The CSS for first fly button.   */
+            .flyOne {
+                display: inline-block; /* displays over the map */
+                position: relative; /* displays over the map */
+                /*left: 150px; /*Moves all buttons further to center*/
+                margin: 10px auto; 
+                width: 50%;  /* width of parent div, aka width of buttons */
+                padding: 10px;
+                border-style: solid;
+                border-color: oldlace;
+                border-radius: 3px; /* rounded corners */
+                font-family: "Caudex", serif; /*Font used*/
+                font-size: 1em;
+                font-weight: 400;
+                text-align: center; /*The text's alignment*/
+                color: black;
+                background: #fff7ec;
+                cursor:pointer;
+                
+            }
+
+            /*Inverts button's background/text colors when hovered over*/
+            .flyOne:hover {
+                background-color: black;
+                color: #fff7ec;
+            }
+
+            /* The CSS for second fly button.   */
+            .flyTwo {
+                display: inline-block; /* displays over the map */
+                position: relative; /* displays over the map */
+                /*left: 150px; /*Moves all buttons further to center*/
+                margin: 10px auto; 
+                width: 50%;  /* width of parent div, aka width of buttons */
+                padding: 10px;
+                border-style: solid;
+                border-color: oldlace;
+                border-radius: 3px; /* rounded corners */
+                font-family: "Caudex", serif; /*Font used*/
+                font-size: 1em;
+                font-weight: 400;
+                text-align: center;
+                color: black;
+                background: #fee8c8;
+                cursor:pointer;
+            }
+            .flyTwo:hover {
+                background-color: black;
+                color: #fee8c8;
+            }
+
+            /* The CSS for third fly button.   */
+            .flyThree {
+                display: inline-block; /* displays over the map */
+                position: relative; /* displays over the map */
+                /*left: 150px; /*Moves all buttons further to center*/
+                margin: 10px auto; 
+                width: 50%;  /* width of parent div, aka width of buttons */
+                padding: 10px;
+                border-style: solid;
+                border-color: oldlace;
+                border-radius: 3px; /* rounded corners */
+                font-family: "Caudex", serif; /*Font used*/
+                font-size: 1em;
+                font-weight: 400;
+                text-align: center;
+                color: black;
+                background: #fdd49e;
+                cursor:pointer;
+            }
+            .flyThree:hover {
+                background-color: black;
+                color: #fdd49e;
+            }
+
+            /* The CSS for fourth fly button.   */
+            .flyFour {
+                display: inline-block; /* displays over the map */
+                position: relative; /* displays over the map */
+                /*left: 150px; /*Moves all buttons further to center*/
+                margin: 10px auto; 
+                width: 50%;  /* width of parent div, aka width of buttons */
+                padding: 10px;
+                border-style: solid;
+                border-color: oldlace;
+                border-radius: 3px; /* rounded corners */
+                font-family: "Caudex", serif; /*Font used*/
+                font-size: 1em;
+                font-weight: 400;
+                text-align: center;
+                color: black;
+                background: #fdbb84;
+                cursor:pointer;
+            }
+            .flyFour:hover {
+                background-color: black;
+                color: #fdbb84;
+            }
+
+            /* The CSS for final fly button.   */
+            .flyFive {
+                display: inline-block; /* displays over the map */
+                position: relative; /* displays over the map */
+                /*left: 150px; /*Moves all buttons further to center*/
+                margin: 10px auto; 
+                width: 50%;  /* width of parent div, aka width of buttons */
+                padding: 10px;
+                border-style: solid;
+                border-color: oldlace;
+                border-radius: 3px; /* rounded corners */
+                font-family: "Caudex", serif; /*Font used*/
+                font-size: 1em;
+                font-weight: 400;
+                text-align: center;
+                color: black;
+                background: #fc8d59;
+                cursor:pointer;
+            }
+            .flyFive:hover {
+                background-color: black;
+                color: #fc8d59;
+            }
+
+            /*Changes cursor to pointer when hovering over the markers*/
+            .mapboxgl-canvas-container.mapboxgl-interactive{
+                cursor: pointer;
+            }
+
+            /*Intro description panel*/
+            .descriptionPanelIntro {
+                position: absolute;
+                bottom: 500px;
+                left: 375px;
+                z-index: 2;
+                width: 1000px;
+                background: white;
+                transition: width 2s, height 2s;
+                overflow: hidden;
+                border-radius: 7px;
+                text-align: center;
+                font-family: "Caudex", serif; /*Font used*/
+                font-size: 1em;
+                font-weight: 400;
+            }
+
+            /*Description panel after closing the first*/
+            .descriptionPanelCorner {
+                position: absolute;
+                bottom: 65px;
+                left: 20px;
+                z-index: 2;
+                width: 500px;
+                background: white;
+                transition: width 2s, height 2s;
+                overflow: auto; /*Makes it scrollable*/
+                border-radius: 7px;
+                text-align: center;
+                font-family: "Caudex", serif; /*Font used*/
+                font-size: 1em;
+                font-weight: 400;
+                height: auto
+            }
+
+            /*Chevron is the arrow on description panel*/
+            .chevron {
+                position: relative;
+                font-size: x-large;
+                color: green;
+                cursor: pointer;
+            }
+
+            /* Makes the male mallard's image fit the box*/
+            .maleMallardImage{
+                width:100%;
+                font-weight: 600;
+            }
+        </style>
+    </head>
+    <body>
+        <!--Description panel text in center explaining map-->
+        <div class="descriptionPanelIntro" id="descriptionPanelIntro" style="height: 250px;">
+            <span onClick=panelSelect() id="glyph" class="chevron glyphicon glyphicon-chevron-down"></span>
+            <hr/>
+            <h3>MALLARD DUCKS' WINTER MIGRATION</h3>
+            <p style="margin-left: 10px; margin-right: 10px;">
+            This interactive map contains a list of markers whose positions correspond with the route that mallards travel when migrating south for the winter, along the Mississippi Flyway. Close this panel to move onto the navigation panel.
+            </p>
+        </div>
+
+        <!--Description panel text in left corner + nav buttons-->
+        <div class="descriptionPanelCorner" id="descriptionPanelCorner" style="height: 250px; display: none;">
+            <span onClick=panelSelect() id="glyph" class="chevron glyphicon glyphicon-chevron-down"></span>
+            <hr/>
+            <h3><p>MALLARD DUCKS' WINTER MIGRATION</p>
+                <p> Isaac Thurber</p></h3>
+            <p style="margin-left: 10px; margin-right: 10px;">
+            This interactive map contains a list of markers whose positions correspond with the route that mallards travel when migrating south for the winter, along the Mississippi Flyway. Click the buttons within this panel, from top to bottom, to fly along the full migration path.
+            </p>
+            <p> </p>
+            <button class='flyOne' id='EssayButton'> Essay on mallard migration</button>
+            <p> </p>
+            <button class='flyTwo' id='MatingButton'> Range of mallards' mating in North America</button>
+            <p> </p>
+            <button class='flyThree' id='MoltButton'> Video of mallards' molting</button>
+            <p> </p>
+            <button class='flyFour' id='MaleMallardButton'> Visual of juvenile mallard drakes</button>
+            <p> </p>
+            <button class='flyFive' id='WorksCitedButton'> Works Cited</button>
+
+        <script>
+            mapboxgl.accessToken = "pk.eyJ1IjoidGluc2VsLXNob3J0Y2FrZSIsImEiOiJjbW5qcHNkdzkwcWh1Mm9vZDBrYTRxeDlpIn0.ihhQGwQSR32s5TnmMQgHMA"; //Access token
+
+            //Map boundaries
+            var boundaries = [
+                [-146.8108, 5.6308], //SW
+                [-69.8931, 66.2617] //NE
+                
+            ]
+
+            //Initialize map
+            var map = new mapboxgl.Map({ 
+                container: 'map',
+                style: 'mapbox://styles/tinsel-shortcake/cmp8zmfgp008001shh8eu4lnc',
+                center: [-130.7736, 58.5],
+                zoom: 5,
+                maxBounds: boundaries,
+                minZoom: 4.75,
+                maxZoom: 7
+            })
+
+            //Essay marker + popup
+            var popup1Text = '<a href="https://docs.google.com/document/d/1fOZLcm_aH-gY-3ZAnRLDcVapVoulkg45GhJecpF0yas/edit?tab=t.0" target="_blank">Before starting your journey south with the mallards, click here to read about the sign stimulus for their winter migration.</a>';
+            
+            var popup1 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup1Text);
+
+            var marker1 = new mapboxgl.Marker({color: "#fff7ec"}) //Replace color with #fff7ec after final
+                .setLngLat ([-130.7736, 59.2837]) //British Columbia
+                .setPopup(popup1)
+                .addTo(map)
+
+            //Prairie Pothole Region marker + popup
+            var popup2Text = '<p> The majority of the mating range of mallard ducks occurs here, in the Prairie Pothole Region of Canada and the United States. This is their starting location when they make the decision to undergo their migration south, triggered by winter weather conditions.</p>';
+            popup2Text += '<p>Source 1: U.S. Fish & Wildlife Service (n.d.) <i>Mallard (Anas platyrhynchos).</i> <a href="https://www.fws.gov/species/mallard-anas-platyrhynchos" target="_blank">https://www.fws.gov/species/mallard-anas-platyrhynchos</a>';
+            popup2Text += '<p>Source 2: Government of Canada (2019). <i> Mallard (Anas platyrhynchos).</i> <a href="https://wildlife-species.canada.ca/bird-status/oiseau-bird-eng.aspx?sY=2019&sL=e&sB=MALL&sM=a" target="_blank">https://wildlife-species.canada.ca/bird-status/oiseau-bird-eng.aspx?sY=2019&sL=e&sB=MALL&sM=a</a>';
+            popup2Text += '<p>Source 3: Weller, F. G., Beatty, W. S., Webb, E. B., Kesler, D. C., Krementz, D. G., Asante, K., & Naylor, L. W. (2022). Environmental drivers of autumn migration departure decisions in midcontinental mallards. <i>Movement Ecology,</i> 10(1). <a href="https://doi.org/10.1186/s40462-021-00299-x" target="_blank">https://doi.org/10.1186/s40462-021-00299-x</a></p>';
+            popup2Text += '<p>Shapefile From: <a href="https://www.arcgis.com/home/item.html?id=df3b74560d34426383a8d961596fa563" target="_blank">ArcGIS</a>'
+
+            
+            var popup2 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup2Text);
+
+            var marker2 = new mapboxgl.Marker({color: "#fee8c8"})
+                .setLngLat ([-104.6563, 50.4422]) //Prairie Pothole Region
+                .setPopup(popup2)
+                .addTo(map)
+
+            //Video marker + popup
+            var popup3Text = "<p> In the fall, mallard drakes experience an increase in testosterone just before they molt in preparation for their migration. They normally have a brown plumage like hens, but during molting they shed it to reveal the green coloration that the general population's more familiar with. The result of this is influenced by the quantity of food available because of how taxing it is. This is an example of ornaments at play as only the healthiest of mallards will have their signature green plumage to appeal to potential mates with their appropriate genes for survival. </p>";
+            popup3Text += '<iframe width="100%" height="315" src="https://www.youtube.com/embed/WYe_HpjDAUE?si=onf3eyzFwMK_zsYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+            popup3Text += '<p>Source: Jahn, Walter (2024, December 11). <i>MALLARD BREEDING PLUMAGE & COURTSHIP before winter.</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=WYe_HpjDAUE" target="_blank">https://www.youtube.com/watch?v=WYe_HpjDAUE</a> </p>';
+            popup3Text += '<p>Source: Bramhill, M. (Senior Producer). (2025, August 17). Male Mallards Disappear. In <i>BirdNote®.</i> Birdnote. <a href="https://www.birdnote.org/podcasts/birdnote-daily/male-mallards-disappear" target="_blank">https://www.birdnote.org/podcasts/birdnote-daily/male-mallards-disappear</a> </p>';
+            
+            var popup3 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup3Text);
+
+            var marker3 = new mapboxgl.Marker({color: "#fdd49e"})
+                .setLngLat ([-103.5385, 44.375]) //South Dakota/Nebraska
+                .setPopup(popup3)
+                .addTo(map)
+
+            //Image marker + popup
+            var popup4Text = "<p>This is a visual of what mallard drakes look like when they are juveniles. Note their yellow beaks, hens' are usually orange.</p>";
+            
+            //Loads image
+            popup4Text += '<img class ="maleMallardImage" alt="A trio of juvenile male mallards on the Rideau River, in Canada." src ="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Trio_of_immature_male_Mallard_Ducks_Anas_platyrhynchos_3700.jpg/960px-Trio_of_immature_male_Mallard_Ducks_Anas_platyrhynchos_3700.jpg?_=20240919223458">';
+
+            popup4Text += '<p>Source: ImagePerson. (2016). <i>Trio of immature male Mallard Ducks Anas platyrhynchos</i>[Photograph]. Wikimedia Commons. <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Trio_of_immature_male_Mallard_Ducks_Anas_platyrhynchos_3700.jpg/960px-Trio_of_immature_male_Mallard_Ducks_Anas_platyrhynchos_3700.jpg?_=20240919223458" target="_blank">https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Trio_of_immature_male_Mallard_Ducks_Anas_platyrhynchos_3700.jpg/960px-Trio_of_immature_male_Mallard_Ducks_Anas_platyrhynchos_3700.jpg?_=20240919223458</a> </p>';
+
+            
+            var popup4 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup4Text);
+
+            var marker4 = new mapboxgl.Marker({color: "#fdbb84"})
+                .setLngLat ([-96.5602, 36.6065]) //Kansas
+                .setPopup(popup4)
+                .addTo(map)
+
+            //Works cited marker + popup
+            var popup5Text = '<a href="https://docs.google.com/document/d/1s0-UkRMYzMeRJRqCQsxk_XFXQUZsEcyR9KHVYysk-fY/edit?tab=t.0" target="_blank"> Here is my works cited page.</a> No generative AI was used in the making of this interactive webmap. Thanks for viewing!';
+
+            
+            var popup5 = new mapboxgl.Popup({
+                minWidth: '300px',
+            })
+            .setHTML(popup5Text);
+
+            var marker5 = new mapboxgl.Marker({color: "#fc8d59"})
+                .setLngLat ([-103.5833, 26.6495]) //Mexico
+                .setPopup(popup5)
+                .addTo(map)
+
+            //Adds listener to every button
+            
+            document.getElementById('EssayButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-130.7736, 58.5], //British Columbia
+                    zoom: 5
+                    })
+                
+            })
+
+            document.getElementById('MatingButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-104.6563, 50.4422], //Prairie Pothole Region
+                    zoom: 5
+                    })
+                
+            })
+
+            document.getElementById('MoltButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-103.5385, 43], //South Dakota/Nebraska
+                    zoom: 5
+                    })
+                
+            })
+            
+
+            document.getElementById('MaleMallardButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-96.5602, 39], //Kansas
+                    zoom: 5
+                    })
+                
+            })
+
+            document.getElementById('WorksCitedButton').addEventListener('click', function(){
+                map.flyTo({
+                    center: [-103.5833, 26.6495], //Mexico
+                    zoom: 5
+                    })
+            })
+
+            //Controls to initial description panel
+            var state = {panelOpen: true};
+
+
+            function panelSelect(e){
+            if(state.panelOpen){
+                
+                //Hides initial description panel and title banner, and reveals panel in the corner
+                //"Chevron" refers to Bootstrap's carrot icon
+
+                document.getElementById('descriptionPanelIntro').style.display = 'none';
+                document.getElementById('banner').style.display='none';
+                document.getElementById('descriptionPanelCorner').style.display='block';
+                document.getElementById('descriptionPanelCorner').style.height = '26px';
+                document.getElementById('glyph').className = "chevron glyphicon glyphicon-chevron-up";
+                state.panelOpen = false;
+            }
+            else{
+
+                //After closing intro description panel, clicking the carrot opens and closes second description panel
+                document.getElementById('descriptionPanelCorner').style.height = '500px';
+                document.getElementById('glyph').className = "chevron glyphicon glyphicon-chevron-down";
+                state.panelOpen = true;
+            }
+            }
+
+            //Makes mouse cursor the pan symbol
+            map.getCanvas().style.cursor = "grab";
+
+            //Makes line connecting markers
+            map.on('load', () => {
+                map.addSource('mallardRoute',{
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'properties':{},
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates':[
+                            [
+                                -130.7736,
+                                59.2837
+                            ],
+                            [
+                                -104.6563,
+                                50.4422
+                            ],
+                            [
+                                -103.5385,
+                                44.375
+                            ],
+                            [
+                                -96.5602,
+                                36.6065
+                            ],
+                            [
+                                -103.5833,
+                                26.6495
+                            ]
+                        ]
+                        }
+                    }
+                })
+            
+
+                map.addLayer({
+                            'id': 'mallardLine',
+                            'type': 'line',
+                            'source': 'mallardRoute',
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': '#ef6548',
+                                'line-width': 8
+                            }
+                        });
+            });
+            
+        </script>
+    </body>
+</html>
